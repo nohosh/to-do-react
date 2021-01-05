@@ -1,10 +1,11 @@
 
 import './App.css';
 import CreateTD from './CreateTD';
-import { Pane } from 'evergreen-ui';
+
 import Header from './Header';
-import ShowTD from './ShowTD';
+
 import React from 'react';
+import ShowTD from './ShowTD';
 
 
 export default class App extends React.Component {
@@ -14,15 +15,32 @@ export default class App extends React.Component {
 
   callbackCreateTD = (data) => {
     this.setState({ listFromCreateTD: [data, ...this.state.listFromCreateTD] });
-    console.log("App JS", this.state.listFromCreateTD);
   }
+  doneTodo = (id) => {
+    console.log('dont td', id);
+    this.setState({
+      listFromCreateTD: this.state.listFromCreateTD.map(todo => {
+        if (todo.id === id) {
+          return {
+            ...todo,
+            complete: !todo.complete
+          };
+        } else {
+          return todo;
+        }
+      })
+    });
+  }
+
   render() {
     return (
       <div className="App" >
         <Header />
         <CreateTD callBack={this.callbackCreateTD} />
         {this.state.listFromCreateTD.map(todo => (
-          <ShowTD height={50}
+          <ShowTD
+            callBack={() => this.doneTodo(todo.id)}
+            height={50}
             key={todo.id}
             text={todo.text} />
         ))}
