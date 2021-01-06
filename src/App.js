@@ -20,6 +20,7 @@ export default class App extends React.Component {
     console.log('dont td', id);
     this.setState({
       listFromCreateTD: this.state.listFromCreateTD.map(todo => {
+        console.log(todo);
         if (todo.id === id) {
           return {
             ...todo,
@@ -42,6 +43,7 @@ export default class App extends React.Component {
             callBack={() => this.doneTodo(todo.id)}
             height={50}
             key={todo.id}
+            complete={todo.complete}
             text={todo.text} />
         ))}
       </div>
